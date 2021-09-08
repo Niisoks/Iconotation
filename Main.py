@@ -1,7 +1,6 @@
 from PIL import Image
 import os
 
-path = '/home/niisoks/Programming/Python/'
 extension = '.png'
 
 imageDict = {}
@@ -23,7 +22,7 @@ def generate_image(userInput):
             dst.paste(imageDict[userInput[i][z]],(20 * z , 30 * i))
 
     dst = dst.resize((dst.width * 2, dst.height * 2), resample=None, box=None, reducing_gap=None)
-    dst.save('/home/niisoks/Programming/Python/Cringe.png')
+    dst.save(path + 'output.png')
     
 
 def generate_valid_inputs(userInput):
@@ -38,7 +37,14 @@ def generate_valid_inputs(userInput):
 
 def chunks(L, n): return [L[x: x+n] for x in range(0, len(L), n)]
 
-open_images_into_dictionary(imageList, imageDict)
+while True:
+    try:
+        path = input('input path to images e.g /home/usr/images/ :  ')
+        open_images_into_dictionary(imageList, imageDict)
+    except FileNotFoundError:
+        print('No PNGs in stated directory (make sure you have a / at the end)')
+        continue
+    break
 
 userInput = list(input('insert combo').lower())
 userInput = generate_valid_inputs(userInput)
